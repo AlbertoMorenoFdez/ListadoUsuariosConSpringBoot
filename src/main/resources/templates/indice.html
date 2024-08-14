@@ -1,0 +1,62 @@
+<html xmlns:th="http://wwwthymeleaf.org" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+    <title>Pagina de Inicio</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header th:replace="~{Plantilla/plantilla :: encabezado}"></header>
+    
+    <main>
+      <button
+          sec:authorize="hasRole('ADMIN')"
+        th:onclick="|window.location.href='@{/agregar}'|"
+        th:text="#{boton.agregar}"
+      ></button>
+    </main>
+  </br>
+    <div th:if="${individuos.size() == 0}">
+      <h2>La lista de individuos está vacía</h2>
+    </div>
+    <div th:if="${individuos.size() > 0}">
+      <table border="2">
+        <tr>
+          <th th:text="#{individuo.nombre}">Nombre</th>
+          <th th:text="#{individuo.apellido}">Apellido</th>
+          <th th:text="#{individuo.telefono}">Teléfono</th>
+          <th th:text="#{individuo.correo}">Correo</th>
+          <th th:text="#{individuo.edad}">Edad</th>
+          <th sec:authorize="hasRole('ADMIN')" th:text="#{individuo.editar}">Cambiar</th>
+          <th sec:authorize="hasRole('ADMIN')" th:text="#{individuo.eliminar}">Eliminar</th>
+        </tr>
+        <tr th:each="individuo : ${individuos}">
+          <td th:text="${individuo.nombre}"></td>
+          <td th:text="${individuo.apellido}"></td>
+          <td th:text="${individuo.telefono}"></td>
+          <td th:text="${individuo.correo}"></td>
+          <td th:text="${individuo.edad}"></td>
+          <td>
+            <a
+              sec:authorize="hasRole('ADMIN')"
+              th:href="@{'/cambiar/' + ${individuo.id_individuo}}"
+              th:text="#{boton.editarIndividuo}"
+              style="text-decoration: none; color: black"
+            ></a>
+          </td>
+          <td>
+            <a
+              sec:authorize="hasRole('ADMIN')"
+              th:href="@{'/eliminar/' + ${individuo.id_individuo}}"
+              th:text="#{boton.eliminarIndividuo}"
+              style="text-decoration: none; color: black"
+            ></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <footer th:replace="~{Plantilla/plantilla :: pie}"></footer>
+  </body>
+</html>

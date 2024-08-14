@@ -1,0 +1,41 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <head>
+    <title>Plantilla</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header th:fragment="encabezado">
+      <b>Usuario autenticado: </b><span th:text="${auth.name}"></span> |
+      <b>Roles: </b><span th:text="${auth.authorities}"></span>
+
+      <h1 th:text="#{pagina.titulo}" style="color: blue"></h1>
+    </header>
+    <footer th:fragment="pie">
+      <div style="margin-top: 10px">
+        <button><a th:href="@{/(lang=es)}">Español</a></button>
+        <button><a th:href="@{/(lang=en)}">English</a></button>
+        <button><a th:href="@{/(lang=fr)}">Français</a></button>
+      </div>
+      <p th:text="#{pagina.pie}" style="font-style: italic"></p>
+      <a
+        href="#"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+      >
+        <button type="button">Logout</button>
+      </a>
+      <form
+        id="logout-form"
+        method="post"
+        th:action="@{/logout}"
+        style="display: none"
+      >
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+      </form>
+    </footer>
+  </body>
+</html>

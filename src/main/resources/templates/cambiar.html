@@ -1,0 +1,79 @@
+<html xmlns:th="http://wwwthymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Datos del nuevo individuo</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <header th:replace="~{Plantilla/plantilla :: encabezado}"></header>
+    <h2 th:text="#{pagina.subtitulo}"></h2>
+    
+    <main>
+      <button
+        th:onclick="|window.location.href='@{/}'|"
+        th:text="#{boton.volver}"
+      ></button>
+    </main>
+    <br />
+
+    <form
+      action="#"
+      th:action="@{/salvar}"
+      th:object="${individuo}"
+      method="post"
+    >
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div>
+          <label for="nombre" th:text="#{individuo.nombre}">: </label>
+          <input type="text" id="nombre" th:field="*{nombre}" />
+          <span
+            th:if="${#fields.hasErrors('nombre')}"
+            th:errors="*{nombre}"
+            style="color: red"
+          >
+            Nombre Error
+          </span>
+        </div>
+        <div>
+          <label for="apellido" th:text="#{individuo.apellido}">: </label>
+          <input type="text" id="apellido" th:field="*{apellido}" />
+          <span
+            th:if="${#fields.hasErrors('apellido')}"
+            th:errors="*{apellido}"
+            style="color: red"
+          >
+            Apellido Error
+          </span>
+        </div>
+        <div>
+          <label for="telefono" th:text="#{individuo.telefono}">: </label>
+          <input type="text" id="telefono" th:field="*{telefono}" />
+          <span
+            th:if="${#fields.hasErrors('telefono')}"
+            th:errors="*{telefono}"
+            style="color: red"
+          >
+            Teléfono Error
+          </span>
+        </div>
+        <div>
+          <label for="correo" th:text="#{individuo.correo}">:</label>
+          <input type="text" id="correo" th:field="*{correo}" />
+          <span
+            th:if="${#fields.hasErrors('correo')}"
+            th:errors="*{correo}"
+            style="color: red"
+          >
+            Correo Error
+          </span>
+        </div>
+        <div>
+          <label for="edad" th:text="#{individuo.edad}">:</label>
+          <input type="number" id="edad" th:field="*{edad}" />
+        </div>
+      </div>
+      <br />
+      <input th:value="#{boton.guardar}" type="submit" />
+    </form>
+    <footer th:replace="~{Plantilla/plantilla :: pie}"></footer>
+  </body>
+</html>
